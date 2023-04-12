@@ -15,7 +15,7 @@ int main(int ac, char **av)
 
 	for (all = 0; all < ac; ++all)
 	{
-		printf("string[%2d]: %s\n", all, av[all]);
+		printf("string[%d]: %s\n", all, av[all]);
 	}
 
 	return (0);
