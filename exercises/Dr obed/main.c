@@ -20,7 +20,7 @@ int main(void)
 	char *full_command = NULL;
 	char *copy_command = NULL;
 	int num_tokens = 0;
-	int i = 0;
+	int i;
 
 	/* creating an infinite loop */
 	while (1)
@@ -33,7 +33,7 @@ int main(void)
 		
 		if (copy_command == NULL)
 		{
-			perror("hsh: memory allocation error");
+			perror("hsh");
 			return(-1);
 		}
 		
@@ -46,37 +46,38 @@ int main(void)
 			printf("Exiting .....");
 			return(-1);
 		}
-		else
+	
+		/* split the string (full_command) into an array of words */
+		token = strtok(full_command, delim);
+	
+		/* Calculate the total number of tokens */	
+		while (token != NULL)
 		{
-			/* split the string (full_command) into an array of words */
-			token = strtok(full_command, delim);
-		
-			/* Calculate the total number of tokens */	
-			while (token != NULL)
-			{
-				num_tokens++;
-				token = strtok(NULL, delim);
-			}
 			num_tokens++;
-	
-			/* Allocate memory to hold array of strings */
-			argv = malloc(sizeof(char *) * num_tokens);
-
-			/* Store each token in the argv array */
-			token = strtok(copy_command, delim);
-	
-			for (i =0; token != NULL; i++)
-			{
-				argv[i] = malloc(sizeof(char) * strlen(token));
-				strcpy(argv[i], token);
-				
-				printf(">>>>> %s \n", argv[i]);
-				token = strtok(NULL, delim);
-			}
-			argv[i] = NULL;
+			token = strtok(NULL, delim);
 		}
+		num_tokens++;
 
-	free(argv);
+		/* Allocate memory to hold array of strings */
+		argv = malloc(sizeof(char *) * num_tokens);
+
+		/* Store each token in the argv array */
+		token = strtok(copy_command, delim);
+
+		for (i =0; token != NULL; i++)
+		{
+			argv[i] = malloc(sizeof(char) * strlen(token));
+			strcpy(argv[i], token);
+			
+			// printf(">>>>> %s \n", argv[i]);
+			token = strtok(NULL, delim);
+		}
+		argv[i] = NULL;
+		
+		/* execute the command */
+		exec(argv);
+
+
 	free(full_command);
 	free(copy_command);
 	}
