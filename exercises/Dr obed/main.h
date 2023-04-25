@@ -6,4 +6,4 @@
 #define _GNU_SOURCE
 
 
-void exec(char **argv);
+void execmd(char **argv);

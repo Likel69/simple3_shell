@@ -9,18 +9,20 @@
  * Return: Always 0 (success).
  */
 
-int main(void)
+int main(int ac, char **argv)
 {
 	char *prompt = "$ ";
 	size_t n = 0;
 	ssize_t num_chars_read; /* numbers of characters inputted into stdin */
 	const char *delim = " \n";
 	char *token;
-	char **argv;
 	char *full_command = NULL;
 	char *copy_command = NULL;
 	int num_tokens = 0;
 	int i;
+	
+	/* declaring void variables */
+	(void)ac;
 
 	/* creating an infinite loop */
 	while (1)
@@ -75,7 +77,7 @@ int main(void)
 		argv[i] = NULL;
 		
 		/* execute the command */
-		exec(argv);
+		execmd(argv);
 
 
 	free(full_command);
